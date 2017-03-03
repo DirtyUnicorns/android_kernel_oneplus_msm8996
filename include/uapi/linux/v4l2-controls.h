@@ -1210,7 +1210,6 @@ enum v4l2_mpeg_vidc_video_venc_iframesize_type {
 };
 
 #define V4L2_CID_MPEG_VIDC_VIDEO_I_FRAME_QP \
-<<<<<<< HEAD
 		(V4L2_CID_MPEG_MSM_VIDC_BASE + 101)
 #define V4L2_CID_MPEG_VIDC_VIDEO_P_FRAME_QP \
 		(V4L2_CID_MPEG_MSM_VIDC_BASE + 102)
@@ -1223,14 +1222,6 @@ enum v4l2_mpeg_vidc_video_au_delimiter {
 	V4L2_MPEG_VIDC_VIDEO_AU_DELIMITER_DISABLED = 0,
 	V4L2_MPEG_VIDC_VIDEO_AU_DELIMITER_ENABLED = 1
 };
-=======
-		(V4L2_CID_MPEG_MSM_VIDC_BASE + 99)
-#define V4L2_CID_MPEG_VIDC_VIDEO_P_FRAME_QP \
-		(V4L2_CID_MPEG_MSM_VIDC_BASE + 100)
-#define V4L2_CID_MPEG_VIDC_VIDEO_B_FRAME_QP \
-		(V4L2_CID_MPEG_MSM_VIDC_BASE + 101)
->>>>>>> b257572e5183... msm: vidc: Fix masking of QP values for different codecs in driver
-
 
 /*  Camera class control IDs */
 
