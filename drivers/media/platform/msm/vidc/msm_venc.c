@@ -3716,7 +3716,7 @@ static int try_set_ext_ctrl(struct msm_vidc_inst *inst,
 	struct hal_aspect_ratio sar;
 	struct hal_bitrate bitrate;
 	struct hal_frame_size blur_res;
-	struct v4l2_ctrl *temp_ctrl;
+	struct v4l2_control temp_ctrl;
 
 	if (!inst || !inst->core || !inst->core->device || !ctrl) {
 		dprintk(VIDC_ERR, "%s invalid parameters\n", __func__);
@@ -3783,12 +3783,15 @@ static int try_set_ext_ctrl(struct msm_vidc_inst *inst,
 			/* Sanity check for the QP boundaries as we are using
 			 * same control to set Initial QP for all the codecs
 			 */
-			temp_ctrl->id =
+			temp_ctrl.id =
 				V4L2_CID_MPEG_VIDC_VIDEO_INITIAL_I_FRAME_QP;
-			temp_ctrl->val = control[i].value;
-			rc = msm_venc_validate_qp_value(inst, temp_ctrl);
+			temp_ctrl.value = control[i].value;
+
+			rc = msm_comm_s_ctrl(inst, &temp_ctrl);
 			if (rc) {
-				dprintk(VIDC_ERR, "Invalid Initial I QP\n");
+				dprintk(VIDC_ERR,
+					"%s Failed setting Initial I Frame QP : %d\n",
+					__func__, rc);
 				break;
 			}
 			quant.qpi = control[i].value;
@@ -3796,12 +3799,14 @@ static int try_set_ext_ctrl(struct msm_vidc_inst *inst,
 			pdata = &quant;
 			break;
 		case V4L2_CID_MPEG_VIDC_VIDEO_INITIAL_P_FRAME_QP:
-			temp_ctrl->id =
+			temp_ctrl.id =
 				V4L2_CID_MPEG_VIDC_VIDEO_INITIAL_P_FRAME_QP;
-			temp_ctrl->val = control[i].value;
-			rc = msm_venc_validate_qp_value(inst, temp_ctrl);
+			temp_ctrl.value = control[i].value;
+			rc = msm_comm_s_ctrl(inst, &temp_ctrl);
 			if (rc) {
-				dprintk(VIDC_ERR, "Invalid Initial P QP\n");
+				dprintk(VIDC_ERR,
+					"%s Failed setting Initial P Frame QP : %d\n",
+					__func__, rc);
 				break;
 			}
 			quant.qpp = control[i].value;
@@ -3809,12 +3814,14 @@ static int try_set_ext_ctrl(struct msm_vidc_inst *inst,
 			pdata = &quant;
 			break;
 		case V4L2_CID_MPEG_VIDC_VIDEO_INITIAL_B_FRAME_QP:
-			temp_ctrl->id =
+			temp_ctrl.id =
 				V4L2_CID_MPEG_VIDC_VIDEO_INITIAL_B_FRAME_QP;
-			temp_ctrl->val = control[i].value;
-			rc = msm_venc_validate_qp_value(inst, temp_ctrl);
+			temp_ctrl.value = control[i].value;
+			rc = msm_comm_s_ctrl(inst, &temp_ctrl);
 			if (rc) {
-				dprintk(VIDC_ERR, "Invalid Initial B QP\n");
+				dprintk(VIDC_ERR,
+					"%s Failed setting Initial B Frame QP : %d\n",
+					__func__, rc);
 				break;
 			}
 			quant.qpb = control[i].value;
